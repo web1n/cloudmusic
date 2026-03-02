@@ -1,0 +1,32 @@
+[Desktop Entry]
+Name=网易云音乐
+Comment=Electron app for NetEase Cloud Music
+Exec=cloudmusic %U
+Icon=cloudmusic
+Type=Application
+StartupNotify=true
+StartupWMClass=cloudmusic
+Categories=AudioVideo;Audio;Video;
+Keywords=wyy;wyyyy;music;wangyiyun;
+Actions=play;pause;previoustrack;nexttrack;
+SingleMainWindow=true
+
+[Desktop Action play]
+Name=播放
+Exec=cloudmusic --play
+Icon=media-playback-start-symbolic
+
+[Desktop Action pause]
+Name=暂停
+Exec=cloudmusic --pause
+Icon=media-playback-pause-symbolic
+
+[Desktop Action previoustrack]
+Name=上一曲
+Exec=cloudmusic --previoustrack
+Icon=media-skip-backward-symbolic
+
+[Desktop Action nexttrack]
+Name=下一曲
+Exec=cloudmusic --nexttrack
+Icon=media-skip-forward-symbolic

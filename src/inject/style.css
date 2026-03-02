@@ -1,0 +1,42 @@
+body {
+    background-color: transparent !important;
+}
+
+body #root {
+    display: block !important;
+    background: var(--colorBackground) !important;
+
+    border: 1px solid rgba(40, 50, 72, 0.3) !important;
+    box-sizing: border-box !important;
+    border-radius: 8px !important;
+
+    transform: translateZ(0) !important;
+}
+
+.draggable {
+    -webkit-app-region: drag !important;
+}
+
+.draggable * {
+    -webkit-app-region: no-drag;
+}
+
+#electron-window-controls {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    -webkit-app-region: no-drag;
+}
+
+.electron-window-button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace !important;
+    font-weight: bold;
+}

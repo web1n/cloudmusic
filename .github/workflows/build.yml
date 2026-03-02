@@ -1,0 +1,73 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-bundle:
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        include:
+          - arch: linux-x86_64
+            runner: ubuntu-latest
+          - arch: linux-arm64
+            runner: ubuntu-24.04-arm
+          - arch: darwin-aarch64
+            runner: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build package
+        run: |
+          yarn make
+          ls -R out/make
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: cloud-music-${{ matrix.arch }}
+          path: |
+            out/make/**/*.AppImage
+            out/make/**/*.deb
+            out/make/**/*.dmg
+            out/make/**/*.zip
+          if-no-files-found: error
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: build-bundle
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: cloud-music-*
+          merge-multiple: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            **/*.AppImage
+            **/*.deb
+            **/*.dmg
+            **/*.zip
