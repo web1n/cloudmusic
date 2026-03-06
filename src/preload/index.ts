@@ -1,7 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { initMediaSessionHook } from './media';
 import { initLocalStorageHook } from './storage';
-import { initChannel } from './channel';
 import type { MediaControl, WindowControl } from '../cloudmusic';
 
 
@@ -38,4 +37,3 @@ contextBridge.exposeInMainWorld('mediaControl', mediaControl);
 
 contextBridge.executeInMainWorld({ func: initMediaSessionHook });
 contextBridge.executeInMainWorld({ func: initLocalStorageHook });
-contextBridge.executeInMainWorld({ func: initChannel });
