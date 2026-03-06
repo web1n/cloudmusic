@@ -27,9 +27,6 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
     windows[type] = window;
 
     window.setMenu(null);
-    window.webContents.on('console-message', (event) => {
-        console.log(`[Renderer ${type} ${event.level}] ${event.message}`);
-    });
     window.on('closed', () => {
         if (windows[type] === window) windows[type] = undefined;
     });
