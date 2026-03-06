@@ -39,16 +39,8 @@ app.whenReady().then(() => {
     createTray();
     registerIPCHandlers();
     createShowWindow('main');
-
-    app.on('activate', function () {
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createShowWindow('main');
-        }
-    });
 });
 
 app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
+    app.quit();
 });

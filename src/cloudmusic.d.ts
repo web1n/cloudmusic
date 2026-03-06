@@ -19,7 +19,6 @@ export type WindowControl = {
     minimize: () => void;
     maximize: () => void;
     close: () => void;
-    platform: NodeJS.Platform;
     saveResources: boolean;
     onLoginSuccess: (callback: () => void) => void;
 };

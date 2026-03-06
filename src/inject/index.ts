@@ -12,7 +12,7 @@ function initCallbacks() {
 }
 
 function initElements() {
-    if (window.windowControl.platform !== 'darwin') initWindowControls();
+    initWindowControls();
 
     if (window.windowControl.saveResources) {
         setTimeout(() => (document.querySelector('span[aria-label="setting"]') as HTMLElement)?.click(), 3000);
