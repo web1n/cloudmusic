@@ -8,6 +8,7 @@ const WEB_FEATURES = [
         replacement: 'false',
         keywords: [
             '字体选择',
+            '开机自动运行',
             '开启GPU加速',
             '程序启动时自动播放',
         ],
@@ -26,6 +27,8 @@ const REGEX_PATCHES = [
     { pattern: /[a-zA-Z]\.App\.getLocalConfig/g, replacement: 'window.App.getLocalConfig' },
     { pattern: /[a-zA-Z]\.App\.setLocalConfig/g, replacement: 'window.App.setLocalConfig' },
     { pattern: /[a-zA-Z]\.App\.exitApp/g, replacement: 'window.App.exitApp' },
+    { pattern: /[a-zA-Z]\.App\.setAutoRun/g, replacement: 'window.App.setAutoStart' },
+    { pattern: /[a-zA-Z]\.isAutoRun/g, replacement: 'window.App.isAutoStart()' },
 ];
 
 function utf8ToUnicode(str: string): string {
