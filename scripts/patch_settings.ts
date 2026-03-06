@@ -7,6 +7,7 @@ const WEB_FEATURES = [
         pattern: /[a-zA-Z]\.isWeb/g,
         replacement: 'false',
         keywords: [
+            '字体选择',
             '开启GPU加速',
             '程序启动时自动播放',
         ],
@@ -14,6 +15,7 @@ const WEB_FEATURES = [
 ];
 
 const REGEX_PATCHES = [
+    { pattern: /[a-zA-Z]\["page:setting"\]\.fontList/g, replacement: '["默认", ...window.App.localFonts]' },
     { pattern: /[a-zA-Z]\.App\.getLocalConfig/g, replacement: 'window.App.getLocalConfig' },
     { pattern: /[a-zA-Z]\.App\.setLocalConfig/g, replacement: 'window.App.setLocalConfig' },
     { pattern: /[a-zA-Z]\.App\.exitApp/g, replacement: 'window.App.exitApp' },
