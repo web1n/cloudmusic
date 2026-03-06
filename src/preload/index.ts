@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { initMediaSessionHook } from './media';
 import { initLocalStorageHook } from './storage';
+import { getAvaliableFontFamilies } from './fonts';
 import type { App, MediaControl, WindowControl } from '../cloudmusic';
 
 
@@ -36,6 +37,8 @@ const app: App = {
     getLocalConfig: ({ type, key }) => ipcRenderer.invoke('get-local-config', type, key),
     setLocalConfig: ({ type, key, value }) => ipcRenderer.send('set-local-config', type, key, value),
     exitApp: (type: string) => ipcRenderer.send('exit-app', type),
+
+    localFonts: getAvaliableFontFamilies(),
 }
 
 contextBridge.exposeInMainWorld('windowControl', windowControl);
