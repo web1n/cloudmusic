@@ -6,10 +6,12 @@ const config = new Configstore('cloudmusic', {
         'hardware-acceleration': '1',
     },
     local: {
+        'showPlayDesktopNotify': true,
     }
 });
 
 export const VALID_LOCAL_CONFIG_KEYS: string[] = [
+    'showPlayDesktopNotify',
 ];
 
 export function getConfig<T extends string>(key: string, defaultValue: T): string;

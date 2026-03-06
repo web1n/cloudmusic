@@ -12,6 +12,13 @@ const WEB_FEATURES = [
             '程序启动时自动播放',
         ],
     },
+    {
+        pattern: /[a-zA-Z]\.isOSX/g,
+        replacement: 'true',
+        keywords: [
+            '"aria-label": "桌面通知"'
+        ],
+    },
 ];
 
 const REGEX_PATCHES = [

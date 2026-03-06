@@ -1,6 +1,7 @@
 import { Notification } from 'electron';
 import { sendIpc } from './window';
 import { updateTray } from './tray';
+import { getConfig } from './configs';
 
 
 const BASIC_MEDIA_SESSION_ACTIONS = ['play', 'pause', 'previoustrack', 'nexttrack'] as const;
@@ -13,6 +14,7 @@ const currentStatus = {
 
 function updateNotification() {
     if (!isPlaying() || !getMediaMetadata()) return;
+    if (!getConfig('local.showPlayDesktopNotify', true)) return;
 
     const notification = new Notification({
         title: getMediaMetadata().title,
