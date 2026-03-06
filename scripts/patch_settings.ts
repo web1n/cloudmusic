@@ -7,6 +7,7 @@ const WEB_FEATURES = [
         pattern: /[a-zA-Z]\.isWeb/g,
         replacement: 'false',
         keywords: [
+            '开启GPU加速',
             '程序启动时自动播放',
         ],
     },
