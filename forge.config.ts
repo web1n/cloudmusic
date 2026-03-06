@@ -17,14 +17,14 @@ const config: ForgeConfig = {
             options: {
                 categories: ['AudioVideo', 'Audio', 'Video'],
                 icon: 'resources/icon.png',
-                desktopTemplate: 'cloudmusic.desktop',
+                desktopTemplate: 'resources/cloudmusic.desktop',
             }
         }),
         new MakerAppImage({
             options: {
                 categories: ['AudioVideo', 'Audio', 'Video'],
                 icon: 'resources/icon.png',
-                desktopFile: 'cloudmusic.desktop',
+                desktopFile: 'resources/cloudmusic.desktop',
             }
         }),
         new MakerZIP({})
