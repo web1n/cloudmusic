@@ -33,6 +33,8 @@ const mediaControl: MediaControl = {
 };
 
 const app: App = {
+    getLocalConfig: ({ type, key }) => ipcRenderer.invoke('get-local-config', type, key),
+    setLocalConfig: ({ type, key, value }) => ipcRenderer.send('set-local-config', type, key, value),
     exitApp: (type: string) => ipcRenderer.send('exit-app', type),
 }
 

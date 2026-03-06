@@ -35,5 +35,7 @@ export type StorageItemChangeEvent = CustomEvent<{ key: string; value: any }>;
 export type StorageItemRemoveEvent = CustomEvent<{ key: string }>;
 
 export type App = {
+    getLocalConfig: (request: { type: string; key: string }) => Promise<any>;
+    setLocalConfig: (request: { type: string; key: string; value: string }) => void;
     exitApp: (type: string) => void;
 };
