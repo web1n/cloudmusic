@@ -9,6 +9,7 @@ const windowControl: WindowControl = {
     maximize: () => ipcRenderer.send('window-maximize'),
     close: () => ipcRenderer.send('window-close'),
     platform: process.platform,
+    saveResources: process.env.NODE_ENV === 'development' && !!process.env['SAVE_RESOURCES'],
     onLoginSuccess: (callback) => {
         ipcRenderer.on('login-success', () => callback());
     },
