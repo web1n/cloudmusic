@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "start": "electron-forge start",
+    "save": "rm -rf local-resources && SAVE_RESOURCES=true electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "make:linux-x64": "electron-forge make --arch=x64 --platform=linux",
@@ -28,6 +29,7 @@
     "@electron/fuses": "^1.0.0",
     "@reforged/maker-appimage": "^5.2.0",
     "electron": "^40.6.1",
+    "mime": "^4.1.0",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"
   },

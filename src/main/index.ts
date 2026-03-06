@@ -3,6 +3,7 @@ import { createShowWindow, showWindow } from './window';
 import { createTray } from './tray';
 import { registerIPCHandlers } from './ipcHandler';
 import { controlPlay } from './media';
+import { handleSaveResources, handleHttpRequest } from './resources';
 
 
 const gotTheLock = app.requestSingleInstanceLock();
@@ -29,6 +30,12 @@ app.on('second-instance', (_event, commandLine) => {
 });
 
 app.whenReady().then(() => {
+    if (process.env.NODE_ENV === 'development' && process.env['SAVE_RESOURCES']) {
+        handleSaveResources();
+    } else {
+        handleHttpRequest();
+    }
+
     createTray();
     registerIPCHandlers();
     createShowWindow('main');
