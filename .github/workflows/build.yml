@@ -33,6 +33,16 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Save resources
+        run: |
+          xvfb-run -a yarn save
+          ls -R local-resources
+        env:
+          ELECTRON_DISABLE_SANDBOX: 1
+
+      - name: Patch files
+        run: yarn patch-local
+
       - name: Build package
         run: |
           yarn make
