@@ -1,9 +1,23 @@
-import { app, shell } from 'electron';
+import { app, shell, BrowserWindowConstructorOptions } from 'electron';
 import { LOGIN_URL, MUSIC_URL, createWindow, createShowWindow } from './index';
 import path from 'path';
 import fs from 'fs';
 import style from '../../inject/style.css?raw';
+import { getConfig } from '../configs';
 
+
+let isAutoStart = process.argv.includes('--autostart');
+
+function createAutoStartOptions(): BrowserWindowConstructorOptions {
+    if (!isAutoStart) return {};
+    isAutoStart = false;
+
+    const autoRunShowType = getConfig('local.autoRunShowType', 'front');
+    const shouldShowWindow = autoRunShowType === 'front';
+    console.log(`App is launched with --autostart, autoRunShowType: ${autoRunShowType}, shouldShowWindow: ${shouldShowWindow}`);
+
+    return { show: shouldShowWindow };
+}
 
 export function createMainWindow() {
     const window = createWindow('main', {
@@ -11,6 +25,7 @@ export function createMainWindow() {
         minHeight: 800,
         frame: false,
         transparent: true,
+        ...createAutoStartOptions(),
     });
     window.loadURL(MUSIC_URL);
 
