@@ -21,8 +21,6 @@ jobs:
             runner: ubuntu-latest
           - arch: linux-arm64
             runner: ubuntu-24.04-arm
-          - arch: darwin-aarch64
-            runner: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -47,7 +45,6 @@ jobs:
           path: |
             out/make/**/*.AppImage
             out/make/**/*.deb
-            out/make/**/*.dmg
             out/make/**/*.zip
           if-no-files-found: error
 
@@ -69,5 +66,4 @@ jobs:
           files: |
             **/*.AppImage
             **/*.deb
-            **/*.dmg
             **/*.zip
