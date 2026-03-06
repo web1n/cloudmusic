@@ -1,7 +1,7 @@
 import { BrowserWindow, app } from 'electron';
 import { createShowWindow, showWindow } from './window';
 import { createTray } from './tray';
-import { registerIPCHandlers } from './ipcHandler';
+import { registerIPCHandlers } from './ipc';
 import { controlPlay } from './media';
 import { handleSaveResources, handleHttpRequest } from './resources';
 
