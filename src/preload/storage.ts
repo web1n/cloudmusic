@@ -3,6 +3,7 @@ export function initLocalStorageHook() {
 
     const UPLOAD_CONFIG_KEY_LIST = [
         'setting',
+        'autoRunShowType'
     ];
 
     localStorage.setItem = function (key, value) {

@@ -47,6 +47,10 @@ function onSaveEncryptedConfig(_event: IpcMainEvent, key: string, value: string)
     switch (key) {
         case 'setting':
             return saveEncryptedConfigs(parsed);
+        case 'autoRunShowType':
+            // "front" | "minisize" to front | minisize
+            const type = (parsed as string).replaceAll('"', '');
+            return saveEncryptedConfigs({ autoRunShowType: type });
     }
 }
 

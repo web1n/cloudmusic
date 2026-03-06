@@ -6,11 +6,13 @@ const config = new Configstore('cloudmusic', {
         'hardware-acceleration': '1',
     },
     local: {
+        'autoRunShowType': 'minisize',
         'showPlayDesktopNotify': true,
     }
 });
 
 export const VALID_LOCAL_CONFIG_KEYS: string[] = [
+    'autoRunShowType',
     'showPlayDesktopNotify',
 ];
 
