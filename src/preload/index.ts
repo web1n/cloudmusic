@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { initMediaSessionHook } from './media';
 import { initLocalStorageHook } from './storage';
-import type { MediaControl, WindowControl } from '../cloudmusic';
+import type { App, MediaControl, WindowControl } from '../cloudmusic';
 
 
 const windowControl: WindowControl = {
@@ -33,8 +33,13 @@ const mediaControl: MediaControl = {
     },
 };
 
+const app: App = {
+    exitApp: (type: string) => ipcRenderer.send('exit-app', type),
+}
+
 contextBridge.exposeInMainWorld('windowControl', windowControl);
 contextBridge.exposeInMainWorld('mediaControl', mediaControl);
+contextBridge.exposeInMainWorld('App', app);
 
 contextBridge.executeInMainWorld({ func: initMediaSessionHook });
 contextBridge.executeInMainWorld({ func: initLocalStorageHook });

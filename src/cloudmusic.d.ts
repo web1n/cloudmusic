@@ -2,6 +2,7 @@ declare global {
     interface Window {
         windowControl: WindowControl;
         mediaControl: MediaControl;
+        App: App;
         mediaControlHandlers: { [key in MediaSessionAction]?: MediaSessionActionHandler | null };
     }
 }
@@ -33,3 +34,7 @@ export type MediaControl = {
 
 export type StorageItemChangeEvent = CustomEvent<{ key: string; value: any }>;
 export type StorageItemRemoveEvent = CustomEvent<{ key: string }>;
+
+export type App = {
+    exitApp: (type: string) => void;
+};
