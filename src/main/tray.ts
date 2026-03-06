@@ -51,7 +51,7 @@ export function updateTray() {
 export function createTray() {
     tray = new Tray(icon);
     tray.setToolTip('网易云音乐');
-    tray.on('click', () => togglePlay());
+    tray.on('click', () => showWindow('main'));
 
     updateTray();
 }
