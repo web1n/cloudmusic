@@ -1,5 +1,6 @@
 import { app, ipcMain, IpcMainEvent } from "electron";
 import { getConfig, setConfig, VALID_LOCAL_CONFIG_KEYS } from "../configs";
+import { setAutoStart, isAutoStart } from "../autostart";
 import crypto from 'crypto';
 
 
@@ -26,6 +27,14 @@ function onExitApp(_event: IpcMainEvent, type: string) {
 
     app.isQuitting = true;
     app.quit();
+}
+
+function onSetAutoStart(_event: IpcMainEvent, enable: boolean) {
+    setAutoStart(enable);
+}
+
+function onIsAutoStart(event: IpcMainEvent) {
+    event.returnValue = isAutoStart();
 }
 
 function onSaveEncryptedConfig(_event: IpcMainEvent, key: string, value: string) {
@@ -73,5 +82,7 @@ export function registerAppIPCHandlers() {
     ipcMain.handle('get-local-config', handleGetLocalConfig);
     ipcMain.on('set-local-config', onSetLocalConfig);
     ipcMain.on('exit-app', onExitApp);
+    ipcMain.on('set-auto-start', onSetAutoStart);
+    ipcMain.on('is-auto-start', onIsAutoStart);
     ipcMain.on('save-encrypted-config', onSaveEncryptedConfig);
 }

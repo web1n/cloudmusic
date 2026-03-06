@@ -35,7 +35,8 @@ export type App = {
     getLocalConfig: (request: { type: string; key: string }) => Promise<any>;
     setLocalConfig: (request: { type: string; key: string; value: string }) => void;
     exitApp: (type: string) => void;
-
+    setAutoStart: (enable: boolean) => void;
+    isAutoStart: () => boolean;
     saveEncryptedConfig: (key: string, value: string) => void;
     localFonts: string[];
 };
