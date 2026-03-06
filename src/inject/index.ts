@@ -16,6 +16,7 @@ function initElements() {
 
     if (window.windowControl.saveResources) {
         setTimeout(() => (document.querySelector('span[aria-label="setting"]') as HTMLElement)?.click(), 3000);
+        setTimeout(() => window.App.exitApp('exit'), 6000);
     }
 }
 
