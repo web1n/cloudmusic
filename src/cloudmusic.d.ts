@@ -39,5 +39,6 @@ export type App = {
     setLocalConfig: (request: { type: string; key: string; value: string }) => void;
     exitApp: (type: string) => void;
 
+    saveEncryptedConfig: (key: string, value: string) => void;
     localFonts: string[];
 };

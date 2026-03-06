@@ -38,6 +38,7 @@ const app: App = {
     setLocalConfig: ({ type, key, value }) => ipcRenderer.send('set-local-config', type, key, value),
     exitApp: (type: string) => ipcRenderer.send('exit-app', type),
 
+    saveEncryptedConfig: (key, value) => ipcRenderer.send('save-encrypted-config', key, value),
     localFonts: getAvaliableFontFamilies(),
 }
 

@@ -1,5 +1,6 @@
 import { app, ipcMain, IpcMainEvent } from "electron";
-import { getConfig, setConfig } from "../configs";
+import { getConfig, setConfig, VALID_LOCAL_CONFIG_KEYS } from "../configs";
+import crypto from 'crypto';
 
 
 function handleGetLocalConfig(_event: IpcMainEvent, type: string, key: string) {
@@ -27,8 +28,50 @@ function onExitApp(_event: IpcMainEvent, type: string) {
     app.quit();
 }
 
+function onSaveEncryptedConfig(_event: IpcMainEvent, key: string, value: string) {
+    const decrypted = decryptConfig(value);
+    if (!decrypted) return;
+
+    const parsed = JSON.parse(decrypted);
+    // console.log('onSaveEncryptedConfig: Parsed config:', parsed);
+
+    switch (key) {
+        case 'setting':
+            return saveEncryptedConfigs(parsed);
+    }
+}
+
+function saveEncryptedConfigs(items: Record<string, any>) {
+    for (const [key, value] of Object.entries(items)) {
+        if (!VALID_LOCAL_CONFIG_KEYS.includes(key)) continue;
+
+        console.log(`saveConfig: Updated config local.${key} = ${value}`);
+        setConfig(`local.${key}`, value);
+    }
+}
+
+function decryptConfig(encrypted: string): any {
+    const algorithm = 'aes-128-ecb';
+    const key = Buffer.from('aaaaaaaaaaaaaaaa', 'utf-8');
+
+    let decrypted;
+    try {
+        const decipher = crypto.createDecipheriv(algorithm, key, null);
+        decipher.setAutoPadding(true);
+
+        decrypted = decipher.update(encrypted, 'base64', 'utf-8');
+        decrypted += decipher.final('utf-8');
+    } catch (err) {
+        console.error('Failed to decrypt config', err);
+        return null;
+    }
+
+    return decrypted;
+}
+
 export function registerAppIPCHandlers() {
     ipcMain.handle('get-local-config', handleGetLocalConfig);
     ipcMain.on('set-local-config', onSetLocalConfig);
     ipcMain.on('exit-app', onExitApp);
+    ipcMain.on('save-encrypted-config', onSaveEncryptedConfig);
 }

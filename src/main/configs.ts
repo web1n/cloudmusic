@@ -5,7 +5,12 @@ const config = new Configstore('cloudmusic', {
     setting: {
         'hardware-acceleration': '1',
     },
+    local: {
+    }
 });
+
+export const VALID_LOCAL_CONFIG_KEYS: string[] = [
+];
 
 export function getConfig<T extends string>(key: string, defaultValue: T): string;
 export function getConfig<T extends boolean>(key: string, defaultValue: T): boolean;
