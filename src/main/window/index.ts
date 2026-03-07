@@ -11,10 +11,10 @@ export const LOGIN_URL = 'https://music.163.com/login?targetUrl=https%3A%2F%2Fmu
 
 export type WindowType = 'main' | 'login' | 'about';
 
-const windows: { [key in WindowType]?: BrowserWindow } = {};
+const windows: { [key in WindowType]?: number } = {};
 
 export function createWindow(type: WindowType, options?: BrowserWindowConstructorOptions): BrowserWindow {
-    if (windows[type]) return windows[type]!;
+    if (windows[type]) return getWindow(type);
 
     const window = new BrowserWindow({
         icon: nativeImage.createFromDataURL(appIcon),
@@ -25,12 +25,10 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
         },
         ...(options || {})
     });
-    windows[type] = window;
+    windows[type] = window.id;
 
     window.setMenu(null);
-    window.on('closed', () => {
-        if (windows[type] === window) windows[type] = undefined;
-    });
+    window.on('closed', () => windows[type] = undefined);
     window.webContents.on('did-fail-load', (_event, errorCode, errorDescription, url, isMainFrame) => {
         if (!isMainFrame) return;
         if (errorCode === -3) return; // Ignore ERR_ABORTED, which is usually caused by navigation or window close
@@ -58,9 +56,19 @@ export function loadLocalFile(window: BrowserWindow, fileName: string, query: { 
     }
 }
 
-
 export function getWindow(type: WindowType) {
-    return windows[type];
+    const windowId = windows[type];
+    if (!windowId) return undefined;
+
+    return BrowserWindow.fromId(windowId);
+}
+
+export function getWindowType(window: BrowserWindow) {
+    for (const [type, id] of Object.entries(windows)) {
+        if (id === window.id) return type as WindowType;
+    }
+
+    return undefined;
 }
 
 export function showWindow(type: WindowType) {
