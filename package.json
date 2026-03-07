@@ -30,9 +30,11 @@
     "@electron-forge/plugin-vite": "^7.11.1",
     "@electron/fuses": "^1.0.0",
     "@reforged/maker-appimage": "^5.2.0",
+    "bootstrap": "^5.3.8",
     "configstore": "^8.0.0",
     "electron": "^40.6.1",
     "mime": "^4.1.0",
+    "sass": "^1.97.3",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"

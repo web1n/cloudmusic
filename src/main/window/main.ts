@@ -43,6 +43,11 @@ export function createMainWindow() {
             return;
         }
 
+        const urlObj = new URL(url);
+        if (urlObj.protocol === 'file:' || urlObj.hostname === 'localhost') {
+            return;
+        }
+
         event.preventDefault();
     });
 

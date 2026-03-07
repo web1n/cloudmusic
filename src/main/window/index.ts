@@ -30,8 +30,31 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
     window.on('closed', () => {
         if (windows[type] === window) windows[type] = undefined;
     });
+    window.webContents.on('did-fail-load', (_event, errorCode, errorDescription, url, isMainFrame) => {
+        if (!isMainFrame) return;
+        if (errorCode === -3) return; // Ignore ERR_ABORTED, which is usually caused by navigation or window close
+
+        const urlObj = new URL(url);
+        if (urlObj.protocol === 'file:' || urlObj.hostname === 'localhost') {
+            return;
+        }
+
+        console.log(`Failed to load ${url}, errorCode: ${errorCode}, errorDescription: ${errorDescription}, loading 404 page`);
+        loadLocalFile(window, '404.html', { errorCode, errorDescription, url });
+    });
 
     return window;
+}
+
+function loadLocalFile(window: BrowserWindow, fileName: string, query: { [key: string]: any } = {}) {
+    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+        const url = new URL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/${fileName}`);
+        url.search = new URLSearchParams(query).toString();
+
+        window.loadURL(url.toString());
+    } else {
+        window.loadFile(join(__dirname, '../renderer', MAIN_WINDOW_VITE_NAME, fileName), { query });
+    }
 }
 
 export function findWindow(webContents: WebContents) {
