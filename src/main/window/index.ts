@@ -20,7 +20,7 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            ...(type === 'main' ? { preload: join(__dirname, './preload.js') } : {}),
+            preload: join(__dirname, './preload.js'),
         },
         ...(options || {})
     });
