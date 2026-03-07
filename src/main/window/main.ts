@@ -24,7 +24,6 @@ export function createMainWindow() {
         minWidth: 1200,
         minHeight: 800,
         frame: false,
-        transparent: true,
         ...createAutoStartOptions(),
     });
     window.loadURL(MUSIC_URL);

@@ -1,16 +1,17 @@
 body {
-    background-color: transparent !important;
+    position: relative !important;
 }
 
-body #root {
-    display: block !important;
-    background: var(--colorBackground) !important;
-
-    border: 1px solid rgba(40, 50, 72, 0.3) !important;
-    box-sizing: border-box !important;
-    border-radius: 8px !important;
-
-    transform: translateZ(0) !important;
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(40, 50, 72, 0.3);
+    pointer-events: none; 
+    z-index: 2147483647;
 }
 
 .draggable {
