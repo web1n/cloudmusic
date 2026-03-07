@@ -1,4 +1,4 @@
-import './404.scss';
+import './index.scss';
 
 
 function parseQuery() {

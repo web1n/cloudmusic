@@ -1,5 +1,5 @@
 import { Tray, Menu, Notification, MenuItemConstructorOptions, app, nativeImage } from 'electron';
-import { showWindow } from './window';
+import { createShowWindow, showWindow } from './window';
 import { controlPlay, togglePlay, getMediaMetadata, isPlaying, isBasicControlAvailable } from './media';
 import appIcon from '../../resources/icon.png';
 
@@ -37,6 +37,7 @@ export function updateTray() {
         { label: '显示窗口', click: () => showWindow('main') },
         ...menuTemplate,
         { type: 'separator' },
+        { type: 'normal', label: '关于', click: () => createShowWindow('about') },
         {
             label: '退出',
             click: () => {

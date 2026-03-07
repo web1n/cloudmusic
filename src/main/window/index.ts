@@ -1,5 +1,6 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, nativeImage, WebContents } from 'electron';
 import { join } from 'path';
+import { createAboutWindow } from './about';
 import { createMainWindow } from './main';
 import { createLoginWindow } from './login';
 import appIcon from '../../../resources/icon.png';
@@ -8,7 +9,7 @@ import appIcon from '../../../resources/icon.png';
 export const MUSIC_URL = 'https://music.163.com/st/webplayer';
 export const LOGIN_URL = 'https://music.163.com/login?targetUrl=https%3A%2F%2Fmusic.163.com%2Fst%2Fwebplayer';
 
-export type WindowType = 'main' | 'login';
+export type WindowType = 'main' | 'login' | 'about';
 
 const windows: { [key in WindowType]?: BrowserWindow } = {};
 
@@ -42,7 +43,7 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
     return window;
 }
 
-function loadLocalFile(window: BrowserWindow, fileName: string, query: { [key: string]: any } = {}) {
+export function loadLocalFile(window: BrowserWindow, fileName: string, query: { [key: string]: any } = {}) {
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
         const url = new URL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/${fileName}`);
         url.search = new URLSearchParams(query).toString();
@@ -73,6 +74,8 @@ export function createShowWindow(type: WindowType) {
         showWindow(type);
     } else {
         switch (type) {
+            case 'about':
+                return createAboutWindow();
             case 'login':
                 return createLoginWindow();
             case 'main':
