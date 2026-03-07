@@ -57,11 +57,6 @@ function loadLocalFile(window: BrowserWindow, fileName: string, query: { [key: s
     }
 }
 
-export function findWindow(webContents: WebContents) {
-    return Object.values(windows).find(win => {
-        return win?.webContents === webContents;
-    });
-}
 
 export function getWindow(type: WindowType) {
     return windows[type];
