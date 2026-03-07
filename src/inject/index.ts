@@ -11,8 +11,9 @@ function initCallbacks() {
     window.mediaControl.onPlay((action) => controlPlay(action));
 }
 
-function initElements() {
-    initWindowControls();
+async function initElements() {
+    const useSystemDecorations = await window.App.getLocalConfig({ type: 'local', key: 'useSystemDecorations' }) === true;
+    if (!useSystemDecorations) initWindowControls();
 
     if (window.windowControl.saveResources) {
         setTimeout(() => (document.querySelector('span[aria-label="setting"]') as HTMLElement)?.click(), 3000);
@@ -24,5 +25,5 @@ console.log('Initializing injection script');
 
 (function () {
     initCallbacks();
-    waitForElement(NAVBAR_SELECTOR, () => initElements());
+    waitForElement(NAVBAR_SELECTOR, initElements);
 })();

@@ -7,6 +7,7 @@ import { getConfig } from '../configs';
 
 
 let isAutoStart = process.argv.includes('--autostart');
+const useSystemDecorations = getConfig('local.useSystemDecorations', false) === true;
 
 function createAutoStartOptions(): BrowserWindowConstructorOptions {
     if (!isAutoStart) return {};
@@ -23,7 +24,7 @@ export function createMainWindow() {
     const window = createWindow('main', {
         minWidth: 1200,
         minHeight: 800,
-        frame: false,
+        frame: useSystemDecorations,
         ...createAutoStartOptions(),
     });
     window.loadURL(MUSIC_URL);

@@ -11,6 +11,21 @@ function parseQuery() {
     };
 }
 
+async function initConfigElements() {
+    for (const checkbox of document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>) {
+        checkbox.checked = await window.App.getLocalConfig({ type: 'local', key: checkbox.id }) === true;
+
+        checkbox.addEventListener('change', (event) => {
+            const target = event.target as HTMLInputElement;
+
+            console.log(`Checkbox ${target.id} changed to ${target.checked}`);
+            window.App.setLocalConfig({ type: 'local', key: target.id, value: target.checked });
+
+            if (confirm('重启软件以应用更改')) window.App.exitApp('restart');
+        });
+    }
+}
+
 function initVersionElements() {
     document.getElementById('version').textContent = version;
     document.getElementById('check-update').addEventListener('click', () => {
@@ -22,4 +37,5 @@ const { version } = parseQuery();
 
 (() => {
     initVersionElements();
+    initConfigElements();
 })();

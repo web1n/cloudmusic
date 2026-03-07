@@ -8,6 +8,7 @@ const config = new Configstore('cloudmusic', {
     local: {
         'autoRunShowType': 'minisize',
         'showPlayDesktopNotify': true,
+        'useSystemDecorations': false,
     }
 });
 
