@@ -33,7 +33,7 @@ export type MediaControl = {
 
 export type App = {
     getLocalConfig: (request: { type: string; key: string }) => Promise<any>;
-    setLocalConfig: (request: { type: string; key: string; value: string }) => void;
+    setLocalConfig: (request: { type: string; key: string; value: any }) => void;
     exitApp: (type: string) => void;
     setAutoStart: (enable: boolean) => void;
     isAutoStart: () => boolean;
