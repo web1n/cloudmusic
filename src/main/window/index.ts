@@ -1,4 +1,4 @@
-import { BrowserWindow, BrowserWindowConstructorOptions, nativeImage, WebContents } from 'electron';
+import { BrowserWindow, BrowserWindowConstructorOptions, nativeImage, shell } from 'electron';
 import { join } from 'path';
 import { createAboutWindow } from './about';
 import { createMainWindow } from './main';
@@ -38,6 +38,10 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
 
         console.log(`Failed to load ${url}, errorCode: ${errorCode}, errorDescription: ${errorDescription}, loading 404 page`);
         loadLocalFile(window, '404.html', { errorCode, errorDescription, url });
+    });
+    window.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: 'deny' };
     });
 
     return window;

@@ -12,10 +12,6 @@ export function createAboutWindow() {
     });
     loadLocalFile(window, 'about.html', { version: app.getVersion() });
 
-    window.webContents.setWindowOpenHandler(({ url }) => {
-        shell.openExternal(url);
-        return { action: 'deny' };
-    });
     window.webContents.on('will-navigate', (event, url) => {
         if (isLocalUrl(url)) return;
 

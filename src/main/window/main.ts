@@ -28,10 +28,6 @@ export function createMainWindow() {
     });
     window.loadURL(MUSIC_URL);
 
-    window.webContents.setWindowOpenHandler(({ url }) => {
-        shell.openExternal(url);
-        return { action: 'deny' };
-    });
     window.webContents.on('will-navigate', (event, url) => {
         if (isLocalUrl(url)) return;
         if (url.startsWith(MUSIC_URL)) return;

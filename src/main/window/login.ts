@@ -10,9 +10,6 @@ export function createLoginWindow() {
     });
     window.loadURL(LOGIN_URL);
 
-    window.webContents.setWindowOpenHandler(({ url: _ }) => {
-        return { action: 'deny' };
-    });
     window.webContents.on('will-navigate', (_event, navUrl) => {
         if (navUrl.startsWith(MUSIC_URL)) {
             getWindow('main')?.webContents.send('login-success');
