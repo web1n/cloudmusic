@@ -12,7 +12,7 @@ function handleGetLocalConfig(_event: IpcMainEvent, type: string, key: string) {
 }
 
 function onSetLocalConfig(_event: IpcMainEvent, type: string, key: string, value: any) {
-    const VALID_TYPES = ['setting'];
+    const VALID_TYPES = ['setting', 'local'];
     if (!VALID_TYPES.includes(type)) {
         console.warn(`onSetLocalConfig: Invalid type: ${type}`);
         return;
