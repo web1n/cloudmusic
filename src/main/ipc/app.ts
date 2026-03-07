@@ -25,6 +25,10 @@ function onSetLocalConfig(_event: IpcMainEvent, type: string, key: string, value
 function onExitApp(_event: IpcMainEvent, type: string) {
     console.log(`onExitApp: ${type}`);
 
+    if (type === 'restart') {
+        app.relaunch();
+    }
+
     app.isQuitting = true;
     app.quit();
 }
