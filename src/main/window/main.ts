@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindowConstructorOptions } from 'electron';
-import { LOGIN_URL, MUSIC_URL, createWindow, createShowWindow } from './index';
+import { LOGIN_URL, MUSIC_URL, createWindow, createShowWindow, isLocalUrl } from './index';
 import path from 'path';
 import fs from 'fs';
 import style from '../../inject/style.css?raw';
@@ -33,18 +33,12 @@ export function createMainWindow() {
         return { action: 'deny' };
     });
     window.webContents.on('will-navigate', (event, url) => {
-        if (url.startsWith(MUSIC_URL)) {
-            return;
-        }
+        if (isLocalUrl(url)) return;
+        if (url.startsWith(MUSIC_URL)) return;
 
         if (url.startsWith(LOGIN_URL.split('?')[0])) {
             event.preventDefault();
             createShowWindow('login');
-            return;
-        }
-
-        const urlObj = new URL(url);
-        if (urlObj.protocol === 'file:' || urlObj.hostname === 'localhost') {
             return;
         }
 

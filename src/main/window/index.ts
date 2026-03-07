@@ -33,11 +33,7 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
     window.webContents.on('did-fail-load', (_event, errorCode, errorDescription, url, isMainFrame) => {
         if (!isMainFrame) return;
         if (errorCode === -3) return; // Ignore ERR_ABORTED, which is usually caused by navigation or window close
-
-        const urlObj = new URL(url);
-        if (urlObj.protocol === 'file:' || urlObj.hostname === 'localhost') {
-            return;
-        }
+        if (isLocalUrl(url)) return;
 
         console.log(`Failed to load ${url}, errorCode: ${errorCode}, errorDescription: ${errorDescription}, loading 404 page`);
         loadLocalFile(window, '404.html', { errorCode, errorDescription, url });
@@ -87,4 +83,10 @@ export function createShowWindow(type: WindowType) {
 
 export function sendIpc(type: WindowType, channel: string, ...args: any[]) {
     getWindow(type).webContents.send(channel, ...args);
+}
+
+export function isLocalUrl(url: string | URL) {
+    const urlObj = new URL(url);
+
+    return urlObj.protocol === 'file:' || urlObj.hostname === 'localhost';
 }
