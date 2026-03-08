@@ -4,11 +4,12 @@ import { createWindow, getWindow, isLocalUrl, loadLocalFile } from './index';
 
 export function createAboutWindow() {
     const window = createWindow('about', {
-        width: 500,
-        height: 600,
+        width: 300,
+        height: 350,
         resizable: false,
         modal: true,
         parent: getWindow('main'),
+        frame: false,
     });
     loadLocalFile(window, 'about.html', { version: app.getVersion() });
 
