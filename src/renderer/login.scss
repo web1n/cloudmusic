@@ -1,0 +1,38 @@
+@import './index.scss';
+
+.qrcode {
+    min-height: 200px;
+    min-width: 200px;
+}
+
+.qrcode-container {
+    position: relative;
+    display: inline-block;
+
+    margin: 0 auto;
+}
+
+.qrcode-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.qrcode-mask.active {
+    opacity: 1;
+    visibility: visible;
+}

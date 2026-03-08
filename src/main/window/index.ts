@@ -7,7 +7,7 @@ import appIcon from '../../../resources/icon.png';
 
 
 export const MUSIC_URL = 'https://music.163.com/st/webplayer';
-export const LOGIN_URL = 'https://music.163.com/login?targetUrl=https%3A%2F%2Fmusic.163.com%2Fst%2Fwebplayer';
+export const LOGIN_URL = 'https://music.163.com/login';
 
 export type WindowType = 'main' | 'login' | 'about';
 

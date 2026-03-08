@@ -1,19 +1,16 @@
-import { LOGIN_URL, MUSIC_URL, createWindow, getWindow } from './index';
+import { createWindow, getWindow, loadLocalFile } from './index';
 
 
 export function createLoginWindow() {
     const window = createWindow('login', {
-        width: 500,
-        height: 600,
+        width: 300,
+        height: 350,
+        resizable: false,
         modal: true,
         parent: getWindow('main'),
+        frame: false,
     });
-    window.loadURL(LOGIN_URL);
 
-    window.webContents.on('will-navigate', (_event, navUrl) => {
-        if (navUrl.startsWith(MUSIC_URL)) {
-            getWindow('main')?.webContents.send('login-success');
-            window.close();
-        }
-    });
+    loadLocalFile(window, 'login.html');
+    window.webContents.openDevTools({ mode: 'detach' });
 }

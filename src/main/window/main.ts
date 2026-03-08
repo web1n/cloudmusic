@@ -33,7 +33,7 @@ export function createMainWindow() {
         if (isLocalUrl(url)) return;
         if (url.startsWith(MUSIC_URL)) return;
 
-        if (url.startsWith(LOGIN_URL.split('?')[0])) {
+        if (url.startsWith(LOGIN_URL)) {
             event.preventDefault();
             createShowWindow('login');
             return;

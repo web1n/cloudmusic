@@ -13,6 +13,7 @@ export default defineConfig({
             input: {
                 about: resolve(__dirname, 'about.html'),
                 main: resolve(__dirname, 'index.html'),
+                login: resolve(__dirname, 'login.html'),
                 404: resolve(__dirname, '404.html'),
             }
         }
