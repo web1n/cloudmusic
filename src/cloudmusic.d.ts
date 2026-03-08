@@ -40,3 +40,5 @@ export type App = {
     saveEncryptedConfig: (key: string, value: string) => void;
     localFonts: string[];
 };
+
+export type QrCodeLoginStatus = 'expired' | 'waiting' | 'scanned' | 'authorized' | 'failed';
