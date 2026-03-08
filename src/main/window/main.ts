@@ -2,7 +2,7 @@ import { app, shell, BrowserWindowConstructorOptions } from 'electron';
 import { LOGIN_URL, MUSIC_URL, createWindow, createShowWindow, isLocalUrl } from './index';
 import path from 'path';
 import fs from 'fs';
-import style from '../../inject/style.css?raw';
+import style from '../../inject/style.scss?inline';
 import { getConfig } from '../configs';
 
 

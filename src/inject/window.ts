@@ -1,10 +1,10 @@
 export const NAVBAR_SELECTOR = '#page_pc_main_nav';
 const CONTROL_CONTAINER_ID = 'electron-window-controls';
 
-const CONTROL_BUTTONS: { action: string; label: string; title: string }[] = [
-    { action: 'minimize', label: '−', title: '最小化' },
-    { action: 'maximize', label: '□', title: '最大化' },
-    { action: 'close', label: '×', title: '关闭' },
+const CONTROL_BUTTONS: { action: string; title: string; }[] = [
+    { action: 'minimize', title: '最小化' },
+    { action: 'maximize', title: '最大化' },
+    { action: 'close', title: '关闭' },
 ];
 
 export function initWindowControls() {
@@ -19,17 +19,15 @@ export function initWindowControls() {
 
     const buttonsContainer = document.createElement('div');
     buttonsContainer.id = CONTROL_CONTAINER_ID;
+    buttonsContainer.className = 'electron-window-controls';
 
-    CONTROL_BUTTONS.forEach((btn) => {
+    CONTROL_BUTTONS.forEach(({ action, title }) => {
         const button = document.createElement('span');
-        button.title = btn.title;
-        button.textContent = btn.label;
-
-        button.id = `electron-${btn.action}`;
-        button.className = 'icon electron-window-button';
+        button.title = title;
+        button.className = `electron-window-button ${action}`;
 
         button.onclick = () => {
-            switch (btn.action) {
+            switch (action) {
                 case 'minimize':
                     return window.windowControl.minimize();
                 case 'maximize':

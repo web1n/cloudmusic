@@ -1,0 +1,67 @@
+body {
+    position: relative !important;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(40, 50, 72, 0.3);
+    pointer-events: none;
+    z-index: 2147483647;
+}
+
+.draggable {
+    -webkit-app-region: drag !important;
+}
+
+.draggable * {
+    -webkit-app-region: no-drag;
+}
+
+.electron-window-controls {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    -webkit-app-region: no-drag;
+
+    height: 36px;
+    gap: 10px;
+}
+
+.electron-window-button {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+
+        background-color: var(--colorSidebar3);
+
+        mask-repeat: no-repeat;
+        mask-size: contain;
+    }
+
+    &:hover::before {
+        background-color: var(--colorSidebar1);
+    }
+
+    &.minimize::before {
+        mask-image: url('bootstrap-icons/icons/chevron-down.svg');
+    }
+
+    &.maximize::before {
+        mask-image: url('bootstrap-icons/icons/chevron-up.svg');
+    }
+
+    &.close::before {
+        mask-image: url('bootstrap-icons/icons/x-lg.svg');
+    }
+}
