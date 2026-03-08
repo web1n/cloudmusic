@@ -3,6 +3,7 @@ declare global {
         windowControl: WindowControl;
         mediaControl: MediaControl;
         App: App;
+        Login: Login;
         mediaControlHandlers: { [key in MediaSessionAction]?: MediaSessionActionHandler | null };
     }
 }
@@ -42,3 +43,9 @@ export type App = {
 };
 
 export type QrCodeLoginStatus = 'expired' | 'waiting' | 'scanned' | 'authorized' | 'failed';
+
+export type Login = {
+    generateUnikey: () => Promise<{ unikey: string; url: string }>;
+    checkLoginStatus(unikey: string): Promise<{ status: QrCodeLoginStatus; message?: string }>;
+    getUserProfile(): Promise<{ userId: string; nickname: string; avatarUrl: string }>;
+};

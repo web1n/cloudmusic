@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 import { initMediaSessionHook } from './media';
 import { initLocalStorageHook } from './storage';
 import { getAvaliableFontFamilies } from './fonts';
-import type { App, MediaControl, WindowControl } from '../cloudmusic';
+import type { App, Login, MediaControl, WindowControl } from '../cloudmusic';
 
 
 const windowControl: WindowControl = {
@@ -43,9 +43,16 @@ const app: App = {
     localFonts: getAvaliableFontFamilies(),
 }
 
+const login: Login = {
+    generateUnikey: () => ipcRenderer.invoke('generate-unikey'),
+    checkLoginStatus: (unikey: string) => ipcRenderer.invoke('check-login-status', unikey),
+    getUserProfile: () => ipcRenderer.invoke('get-user-profile'),
+}
+
 contextBridge.exposeInMainWorld('windowControl', windowControl);
 contextBridge.exposeInMainWorld('mediaControl', mediaControl);
 contextBridge.exposeInMainWorld('App', app);
+contextBridge.exposeInMainWorld('Login', login);
 
 contextBridge.executeInMainWorld({ func: initMediaSessionHook });
 contextBridge.executeInMainWorld({ func: initLocalStorageHook });

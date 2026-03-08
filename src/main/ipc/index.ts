@@ -1,5 +1,6 @@
 import { BrowserWindow, IpcMainEvent } from "electron";
 import { registerAppIPCHandlers } from "./app";
+import { registerLoginIPCHandlers } from "./login";
 import { registerMediaControlIPCHandlers } from "./media";
 import { registerWindowControlIPCHandlers } from "./window";
 import { getWindowType } from "../window";
@@ -16,6 +17,7 @@ export function isCallFromMainWindow(event: IpcMainEvent, funcName?: string) {
 
 export function registerIPCHandlers() {
     registerAppIPCHandlers();
+    registerLoginIPCHandlers();
     registerMediaControlIPCHandlers();
     registerWindowControlIPCHandlers();
 }
