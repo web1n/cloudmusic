@@ -24,6 +24,8 @@ export function createMainWindow() {
     const window = createWindow('main', {
         minWidth: 1200,
         minHeight: 800,
+        width: 1200,
+        height: 800,
         frame: useSystemDecorations,
         ...createAutoStartOptions(),
     });
