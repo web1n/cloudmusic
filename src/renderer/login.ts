@@ -75,7 +75,7 @@ async function checkLogin(unikey: string) {
         clearLoginCheckInterval();
     }
     if (status === 'authorized') {
-        window.close();
+        window.windowControl.close();
     }
 }
 
@@ -102,7 +102,7 @@ async function checkUserProfile() {
         const profile = await window.Login.getUserProfile();
         console.log('User profile:', profile);
 
-        window.close();
+        window.windowControl.close();
     } catch (_) {
     }
 }
