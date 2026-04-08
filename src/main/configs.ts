@@ -9,6 +9,7 @@ const DEFAULT_CONFIG = {
         'autoRunShowType': 'minisize',
         'showPlayDesktopNotify': true,
         'useSystemDecorations': false,
+        'useIFrameLogin': true,
     },
 };
 
