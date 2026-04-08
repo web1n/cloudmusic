@@ -103,7 +103,13 @@ export function createShowWindow(type: WindowType) {
 }
 
 export function sendIpc(type: WindowType, channel: string, ...args: any[]) {
-    getWindow(type).webContents.send(channel, ...args);
+    const window = getWindow(type);
+    if (!window) {
+        console.warn(`Failed to send IPC message, window of type ${type} not found`);
+        return;
+    }
+
+    window.webContents.send(channel, ...args);
 }
 
 export function isLocalUrl(url: string | URL) {
