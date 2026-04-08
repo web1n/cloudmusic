@@ -1,4 +1,4 @@
-import { app, shell } from 'electron';
+import { app } from 'electron';
 import { createWindow, getWindow, isLocalUrl, loadLocalFile } from './index';
 
 
