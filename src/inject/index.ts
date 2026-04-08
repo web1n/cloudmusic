@@ -25,5 +25,5 @@ console.log('Initializing injection script');
 
 (function () {
     initCallbacks();
-    waitForElement(NAVBAR_SELECTOR, initElements);
+    waitForElement(NAVBAR_SELECTOR).then(() => initElements());
 })();
