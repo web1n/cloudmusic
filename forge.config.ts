@@ -38,7 +38,20 @@ const config: ForgeConfig = {
                     // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
                     entry: {
                         'main': 'src/main/index.ts',
-                        'inject': 'src/inject/index.ts',
+                    },
+                    config: 'vite.main.config.ts',
+                    target: 'main',
+                },
+                {
+                    entry: {
+                        'inject-cloudmusic': 'src/inject/index.ts',
+                    },
+                    config: 'vite.main.config.ts',
+                    target: 'main',
+                },
+                {
+                    entry: {
+                        'inject-login': 'src/inject/login.ts',
                     },
                     config: 'vite.main.config.ts',
                     target: 'main',

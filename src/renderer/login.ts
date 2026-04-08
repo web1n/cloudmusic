@@ -14,7 +14,7 @@ const STATUS_TEXTS: { [key in QrCodeLoginStatus]?: string } = {
 let loginCheckInterval: NodeJS.Timeout | null = null;
 
 function showQrCodeMask(show: boolean) {
-    const qrcodeMask = document.getElementById('qrcodeMask');
+    const qrcodeMask = document.getElementById('qrcodeMask')!!;
 
     if (show) {
         qrcodeMask.classList.add('active');
@@ -24,13 +24,13 @@ function showQrCodeMask(show: boolean) {
 }
 
 function showReloadButton(show: boolean) {
-    const reloadButton = document.getElementById('reload');
+    const reloadButton = document.getElementById('reload')!!;
 
     reloadButton.classList.toggle('d-none', !show);
 }
 
 function showStatus(message: string, err: boolean = false) {
-    const statusMessage = document.getElementById('status');
+    const statusMessage = document.getElementById('status')!!;
     statusMessage.textContent = message;
 
     showQrCodeMask(true);
@@ -57,7 +57,7 @@ async function checkLogin(unikey: string) {
     let message: string | undefined;
     try {
         ({ status, message } = await window.Login.checkLoginStatus(unikey));
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error checking login status:', error);
         showStatus(error || '检查登录状态失败', true);
         return;
@@ -79,22 +79,9 @@ async function checkLogin(unikey: string) {
     }
 }
 
-async function showLoginQrCode() {
-    let unikey: string;
-    let url: string;
-    try {
-        ({ unikey, url } = await window.Login.generateUnikey());
-    } catch (error) {
-        console.error('Error generating unikey:', error);
-        showStatus(error.message || '获取登录二维码失败', true);
-        return;
-    }
-    console.log('Generated unikey:', unikey, url);
-
+async function showLoginQrCode(url: string) {
     await updateQrCodeContent(url);
     showQrCodeMask(false);
-
-    return unikey;
 }
 
 async function checkUserProfile() {
@@ -107,14 +94,60 @@ async function checkUserProfile() {
     }
 }
 
+function syncLoginViewBounds() {
+    const container = document.querySelector('.qrcode')!!;
+    const rect = container.getBoundingClientRect();
+
+    const bounds = {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height,
+    };
+    console.log('Syncing login view bounds', bounds);
+    window.Login.setLoginViewBounds(bounds);
+}
+
+function initIFrameLogin() {
+    const observer = new ResizeObserver(() => syncLoginViewBounds());
+    observer.observe(document.body);
+
+    requestAnimationFrame(() => syncLoginViewBounds());
+}
+
+async function initApiLogin() {
+    let unikey: string;
+    let url: string;
+    try {
+        ({ unikey, url } = await window.Login.generateUnikey());
+    } catch (error: any) {
+        console.error('Error generating unikey:', error);
+        showStatus(error || '获取登录二维码失败', true);
+        return;
+    }
+
+    console.log('Generated unikey:', unikey, url);
+    showLoginQrCode(url);
+
+    loginCheckInterval = setInterval(async () => await checkLogin(unikey), 2000);
+}
+
+function initReloadButton() {
+    const reloadButton = document.getElementById('reload')!!;
+
+    reloadButton.addEventListener('click', () => window.location.reload());
+}
+
 (async () => {
     initCloseButton();
-
-    document.getElementById('reload').addEventListener('click', () => {
-        window.location.reload();
-    });
+    initReloadButton();
 
     await checkUserProfile();
-    const unikey = await showLoginQrCode();
-    loginCheckInterval = setInterval(async () => await checkLogin(unikey), 2000);
+
+    const useIFrameLogin = await window.App.getLocalConfig({ type: 'local', key: 'useIFrameLogin' });
+    if (useIFrameLogin) {
+        initIFrameLogin();
+    } else {
+        initApiLogin();
+    }
 })();

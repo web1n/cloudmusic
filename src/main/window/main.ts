@@ -45,7 +45,7 @@ export function createMainWindow() {
     });
 
     window.webContents.on('did-finish-load', () => {
-        const injectJs = fs.readFileSync(path.join(__dirname, 'inject.js'), 'utf-8');
+        const injectJs = fs.readFileSync(path.join(__dirname, 'inject-cloudmusic.js'), 'utf-8');
         window.webContents.executeJavaScript(injectJs);
         window.webContents.insertCSS(style);
     });

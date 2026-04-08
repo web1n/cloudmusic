@@ -20,6 +20,6 @@ export function createAboutWindow() {
     });
 
     if (process.env.NODE_ENV === 'development') {
-        window.webContents.openDevTools();
+        window.webContents.openDevTools({mode: 'detach'});
     }
 }

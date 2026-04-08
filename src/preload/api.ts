@@ -45,4 +45,5 @@ export const login: Login = {
     generateUnikey: () => ipcRenderer.invoke('generate-unikey'),
     checkLoginStatus: (unikey: string) => ipcRenderer.invoke('check-login-status', unikey),
     getUserProfile: () => ipcRenderer.invoke('get-user-profile'),
+    setLoginViewBounds: (bounds) => ipcRenderer.send('set-login-view-bounds', bounds),
 }

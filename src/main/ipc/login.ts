@@ -1,7 +1,8 @@
-import { ipcMain } from "electron";
+import { BrowserWindow, IpcMainEvent, ipcMain } from "electron";
 import { generateUnikey, checkQrCodeStatus, getUserProfile } from "../login";
 import { sendIpc } from "../window";
 import type { QrCodeLoginStatus } from "../../cloudmusic";
+import { setLoginViewBounds } from "../window/login";
 
 
 async function handleGenerateUnikey() {
@@ -28,8 +29,19 @@ async function handleGetUserProfile() {
     return await getUserProfile();
 }
 
+function onSetLoginViewBounds(
+    event: IpcMainEvent,
+    bounds: { x: number; y: number; width: number; height: number }
+) {
+    const window = BrowserWindow.fromWebContents(event.sender);
+    if (!window) return;
+
+    setLoginViewBounds(window, bounds);
+}
+
 export function registerLoginIPCHandlers() {
     ipcMain.handle('generate-unikey', async (_) => await handleGenerateUnikey());
     ipcMain.handle('check-login-status', async (_, unikey) => await handleCheckLoginStatus(unikey));
     ipcMain.handle('get-user-profile', async (_) => await handleGetUserProfile());
+    ipcMain.on('set-login-view-bounds', onSetLoginViewBounds);
 }
