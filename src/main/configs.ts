@@ -1,7 +1,7 @@
 import Configstore from 'configstore';
 
 
-const config = new Configstore('cloudmusic', {
+const DEFAULT_CONFIG = {
     setting: {
         'hardware-acceleration': '1',
     },
@@ -9,8 +9,28 @@ const config = new Configstore('cloudmusic', {
         'autoRunShowType': 'minisize',
         'showPlayDesktopNotify': true,
         'useSystemDecorations': false,
+    },
+};
+
+const config = new Configstore('cloudmusic', DEFAULT_CONFIG);
+
+function applyMissingDefaults(prefix: string, defaults: Record<string, any>) {
+    for (const [key, value] of Object.entries(defaults)) {
+        const path = prefix ? `${prefix}.${key}` : key;
+
+        if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+            applyMissingDefaults(path, value);
+            continue;
+        }
+
+        if (config.get(path) === undefined) {
+            console.log(`Setting missing default config for ${path}: ${value}`);
+            config.set(path, value);
+        }
     }
-});
+}
+
+applyMissingDefaults('', DEFAULT_CONFIG);
 
 export const VALID_LOCAL_CONFIG_KEYS: string[] = [
     'autoRunShowType',
