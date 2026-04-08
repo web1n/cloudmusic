@@ -5,11 +5,23 @@ import { MakerZIP } from '@electron-forge/maker-zip';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import { copyFile, chmod } from 'fs/promises';
+import { resolve } from 'path';
 
 const config: ForgeConfig = {
     packagerConfig: {
         asar: true,
         extraResource: './local-resources',
+    },
+    hooks: {
+        packageAfterCopy: async (_forgeConfig, buildPath) => {
+            const baseBuildPath = resolve(buildPath, '..', '..');
+            const appImageScriptPath = 'cloudmusic-appimage';
+            const destinationPath = `${baseBuildPath}/cloudmusic-appimage`;
+
+            await copyFile(appImageScriptPath, destinationPath);
+            await chmod(destinationPath, 0o755); // Make it executable
+        }
     },
     rebuildConfig: {},
     makers: [
@@ -25,6 +37,7 @@ const config: ForgeConfig = {
                 categories: ['AudioVideo', 'Audio', 'Video'],
                 icon: 'resources/icon.png',
                 desktopFile: 'resources/cloudmusic.desktop',
+                bin: 'cloudmusic-appimage',
             }
         }),
         new MakerZIP({})
