@@ -11,17 +11,23 @@ export const LOGIN_URL = 'https://music.163.com/login';
 
 export type WindowType = 'main' | 'login' | 'about';
 
+const PRELOAD_JS_PATHS = {
+    main: join(__dirname, './preload-cloudmusic.js'),
+    login: join(__dirname, './preload-app.js'),
+    about: join(__dirname, './preload-app.js'),
+};
+
 const windows: { [key in WindowType]?: number } = {};
 
 export function createWindow(type: WindowType, options?: BrowserWindowConstructorOptions): BrowserWindow {
-    if (windows[type]) return getWindow(type);
+    if (windows[type]) return getWindow(type)!!;
 
     const window = new BrowserWindow({
         icon: nativeImage.createFromDataURL(appIcon),
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: join(__dirname, './preload.js'),
+            preload: PRELOAD_JS_PATHS[type],
         },
         ...(options || {})
     });

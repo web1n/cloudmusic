@@ -1,3 +1,20 @@
+export function initLocalStorageHook() {
+    const originalSetItem = localStorage.setItem;
+
+    const UPLOAD_CONFIG_KEY_LIST = [
+        'setting',
+        'autoRunShowType'
+    ];
+
+    localStorage.setItem = function (key, value) {
+        if (UPLOAD_CONFIG_KEY_LIST.includes(key) && typeof value === 'string') {
+            window.App.saveEncryptedConfig(key, value);
+        }
+
+        originalSetItem.apply(this, [key, value]);
+    };
+}
+
 export function initMediaSessionHook() {
     console.log('Initializing media session handler');
     window.mediaControl.initMediaControl();
@@ -17,7 +34,7 @@ export function initMediaSessionHook() {
     };
 
     // hook media session metadata setter
-    const descriptor = Object.getOwnPropertyDescriptor(MediaSession.prototype, 'metadata');
+    const descriptor = Object.getOwnPropertyDescriptor(MediaSession.prototype, 'metadata')!!;
     Object.defineProperty(navigator.mediaSession, 'metadata', {
         set(value) {
             const plainMetadata = value != null ? {
@@ -28,10 +45,10 @@ export function initMediaSessionHook() {
             } : null;
             window.mediaControl.setCurrentMetadata(plainMetadata);
 
-            return descriptor.set.call(this, value);
+            return descriptor.set!!.call(this, value);
         },
         get() {
-            return descriptor.get.call(this);
+            return descriptor.get!!.call(this);
         },
         configurable: true,
         enumerable: true

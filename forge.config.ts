@@ -45,7 +45,14 @@ const config: ForgeConfig = {
                 },
                 {
                     entry: {
-                        'preload': 'src/preload/index.ts',
+                        'preload-app': 'src/preload/app.ts',
+                    },
+                    config: 'vite.preload.config.ts',
+                    target: 'preload',
+                },
+                {
+                    entry: {
+                        'preload-cloudmusic': 'src/preload/cloudmusic.ts',
                     },
                     config: 'vite.preload.config.ts',
                     target: 'preload',

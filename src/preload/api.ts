@@ -1,11 +1,9 @@
-import { contextBridge, ipcRenderer } from 'electron';
-import { initMediaSessionHook } from './media';
-import { initLocalStorageHook } from './storage';
+import { ipcRenderer } from 'electron';
+import { App, Login, MediaControl, WindowControl } from '../cloudmusic';
 import { getAvaliableFontFamilies } from './fonts';
-import type { App, Login, MediaControl, WindowControl } from '../cloudmusic';
 
 
-const windowControl: WindowControl = {
+export const windowControl: WindowControl = {
     minimize: () => ipcRenderer.send('window-minimize'),
     maximize: () => ipcRenderer.send('window-maximize'),
     close: () => ipcRenderer.send('window-close'),
@@ -15,7 +13,7 @@ const windowControl: WindowControl = {
     },
 };
 
-const mediaControl: MediaControl = {
+export const mediaControl: MediaControl = {
     initMediaControl: () => {
         ipcRenderer.send('init-media-control');
     },
@@ -33,7 +31,7 @@ const mediaControl: MediaControl = {
     },
 };
 
-const app: App = {
+export const app: App = {
     getLocalConfig: ({ type, key }) => ipcRenderer.invoke('get-local-config', type, key),
     setLocalConfig: ({ type, key, value }) => ipcRenderer.send('set-local-config', type, key, value),
     exitApp: (type: string) => ipcRenderer.send('exit-app', type),
@@ -43,16 +41,8 @@ const app: App = {
     localFonts: getAvaliableFontFamilies(),
 }
 
-const login: Login = {
+export const login: Login = {
     generateUnikey: () => ipcRenderer.invoke('generate-unikey'),
     checkLoginStatus: (unikey: string) => ipcRenderer.invoke('check-login-status', unikey),
     getUserProfile: () => ipcRenderer.invoke('get-user-profile'),
 }
-
-contextBridge.exposeInMainWorld('windowControl', windowControl);
-contextBridge.exposeInMainWorld('mediaControl', mediaControl);
-contextBridge.exposeInMainWorld('App', app);
-contextBridge.exposeInMainWorld('Login', login);
-
-contextBridge.executeInMainWorld({ func: initMediaSessionHook });
-contextBridge.executeInMainWorld({ func: initLocalStorageHook });
