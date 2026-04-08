@@ -1,10 +1,10 @@
-import { app, ipcMain, IpcMainEvent } from "electron";
+import { app, ipcMain, IpcMainEvent, IpcMainInvokeEvent } from "electron";
 import { getConfig, setConfig, VALID_LOCAL_CONFIG_KEYS } from "../configs";
 import { setAutoStart, isAutoStart } from "../autostart";
 import crypto from 'crypto';
 
 
-function handleGetLocalConfig(_event: IpcMainEvent, type: string, key: string) {
+function handleGetLocalConfig(_event: IpcMainInvokeEvent, type: string, key: string) {
     const value = getConfig(`${type}.${key}`)
 
     console.log(`handleGetLocalConfig: type:${type} key:${key} value:${typeof value} ${value}`);
