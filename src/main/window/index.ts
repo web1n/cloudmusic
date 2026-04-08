@@ -62,11 +62,11 @@ export function loadLocalFile(window: BrowserWindow, fileName: string, query: { 
     }
 }
 
-export function getWindow(type: WindowType) {
+export function getWindow(type: WindowType): BrowserWindow | undefined {
     const windowId = windows[type];
     if (!windowId) return undefined;
 
-    return BrowserWindow.fromId(windowId);
+    return BrowserWindow.fromId(windowId) || undefined;
 }
 
 export function getWindowType(window: BrowserWindow) {
