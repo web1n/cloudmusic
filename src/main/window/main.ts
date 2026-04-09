@@ -2,7 +2,6 @@ import { app, BrowserWindowConstructorOptions } from 'electron';
 import { LOGIN_URL, MUSIC_URL, createWindow, createShowWindow, isLocalUrl } from './index';
 import path from 'path';
 import fs from 'fs';
-import style from '../../inject/style.scss?inline';
 import { getConfig } from '../configs';
 
 
@@ -47,7 +46,6 @@ export function createMainWindow() {
     window.webContents.on('did-finish-load', () => {
         const injectJs = fs.readFileSync(path.join(__dirname, 'inject-cloudmusic.js'), 'utf-8');
         window.webContents.executeJavaScript(injectJs);
-        window.webContents.insertCSS(style);
     });
 
     window.on('close', function (event) {

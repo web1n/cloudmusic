@@ -1,0 +1,40 @@
+* {
+    pointer-events: none;
+    user-select: none;
+
+    overflow: hidden !important;
+}
+
+body * {
+    visibility: hidden;
+}
+
+iframe[name="contentFrame"] {
+    visibility: visible;
+}
+
+iframe[name="contentFrame"] {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+canvas[height="256"][width="256"] {
+    visibility: visible;
+}
+
+canvas[height="256"][width="256"] {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+    margin: 0;
+}

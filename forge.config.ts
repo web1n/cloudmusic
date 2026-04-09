@@ -51,13 +51,6 @@ const config: ForgeConfig = {
                 },
                 {
                     entry: {
-                        'inject-login': 'src/inject/login.ts',
-                    },
-                    config: 'vite.main.config.ts',
-                    target: 'main',
-                },
-                {
-                    entry: {
                         'preload-app': 'src/preload/app.ts',
                     },
                     config: 'vite.preload.config.ts',
@@ -66,6 +59,13 @@ const config: ForgeConfig = {
                 {
                     entry: {
                         'preload-cloudmusic': 'src/preload/cloudmusic.ts',
+                    },
+                    config: 'vite.preload.config.ts',
+                    target: 'preload',
+                },
+                {
+                    entry: {
+                        'preload-login': 'src/preload/login.ts',
                     },
                     config: 'vite.preload.config.ts',
                     target: 'preload',
