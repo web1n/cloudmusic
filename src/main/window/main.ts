@@ -43,11 +43,6 @@ export function createMainWindow() {
         event.preventDefault();
     });
 
-    window.webContents.on('did-finish-load', () => {
-        const injectJs = fs.readFileSync(path.join(__dirname, 'inject-cloudmusic.js'), 'utf-8');
-        window.webContents.executeJavaScript(injectJs);
-    });
-
     window.on('close', function (event) {
         if (!app.isQuitting) {
             event.preventDefault();

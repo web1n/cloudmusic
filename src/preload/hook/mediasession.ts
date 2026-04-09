@@ -2,6 +2,20 @@ export function hookMediaSessionActionHandler() {
     const originalSetHandler = MediaSession.prototype.setActionHandler;
     window.mediaControlHandlers = {};
 
+    window.mediaControl.onPlay((action) => {
+        const handler = window.mediaControlHandlers[action];
+
+        if (typeof handler === 'function') {
+            try {
+                handler({ action: action });
+            } catch (error) {
+                console.error(`Error invoking media session action handler for ${action}:`, error);
+            }
+        } else {
+            console.warn(`No media session action handler registered for ${action}`);
+        }
+    });
+
     navigator.mediaSession.setActionHandler = function (action, handler) {
         console.log(`Setting media session action handler for ${action}`);
         const valid = typeof handler === 'function';

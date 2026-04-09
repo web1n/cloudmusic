@@ -18,13 +18,10 @@ export function onLoginSuccess(callback: () => void) {
     ipcRenderer.on('login-success', () => callback());
 }
 
-export const saveResources = process.env.NODE_ENV === 'development' && !!process.env['SAVE_RESOURCES'];
-
 const windowControl: WindowControl = {
     minimize,
     maximize,
     close,
-    saveResources,
     onLoginSuccess,
 };
 
