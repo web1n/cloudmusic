@@ -1,3 +1,6 @@
+import { close, maximize, minimize } from "../api/window";
+
+
 export const NAVBAR_SELECTOR = '#page_pc_main_nav';
 const CONTROL_CONTAINER_ID = 'electron-window-controls';
 
@@ -29,11 +32,11 @@ export function initWindowControls() {
         button.onclick = () => {
             switch (action) {
                 case 'minimize':
-                    return window.windowControl.minimize();
+                    return minimize();
                 case 'maximize':
-                    return window.windowControl.maximize();
+                    return maximize();
                 case 'close':
-                    return window.windowControl.close();
+                    return close();
             }
         };
 

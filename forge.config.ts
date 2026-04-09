@@ -44,13 +44,6 @@ const config: ForgeConfig = {
                 },
                 {
                     entry: {
-                        'inject-cloudmusic': 'src/inject/index.ts',
-                    },
-                    config: 'vite.main.config.ts',
-                    target: 'main',
-                },
-                {
-                    entry: {
                         'preload-app': 'src/preload/app.ts',
                     },
                     config: 'vite.preload.config.ts',

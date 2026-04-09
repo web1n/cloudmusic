@@ -20,7 +20,6 @@ export type WindowControl = {
     minimize: () => void;
     maximize: () => void;
     close: () => void;
-    saveResources: boolean;
     onLoginSuccess: (callback: () => void) => void;
 };
 
