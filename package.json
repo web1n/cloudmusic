@@ -34,7 +34,7 @@
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "configstore": "^8.0.0",
-    "electron": "^40.6.1",
+    "electron": "^41.2.0",
     "mime": "^4.1.0",
     "qrcode": "^1.5.4",
     "rsa-pem-from-mod-exp": "^0.8.6",

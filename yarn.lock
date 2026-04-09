@@ -2407,7 +2407,7 @@ __metadata:
     bootstrap: "npm:^5.3.8"
     bootstrap-icons: "npm:^1.13.1"
     configstore: "npm:^8.0.0"
-    electron: "npm:^40.6.1"
+    electron: "npm:^41.2.0"
     mime: "npm:^4.1.0"
     qrcode: "npm:^1.5.4"
     rsa-pem-from-mod-exp: "npm:^0.8.6"
@@ -2716,16 +2716,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^40.6.1":
-  version: 40.6.1
-  resolution: "electron@npm:40.6.1"
+"electron@npm:^41.2.0":
+  version: 41.2.0
+  resolution: "electron@npm:41.2.0"
   dependencies:
     "@electron/get": "npm:^2.0.0"
     "@types/node": "npm:^24.9.0"
     extract-zip: "npm:^2.0.1"
   bin:
     electron: cli.js
-  checksum: 10c0/e8f1cc92d3bd93d8bb2b83cc238dd6957f69f12ddb62d1a50459eb24650be765d840abc2bb29e766ba564fb3f0fee057b757e4656d668b2aba128bece8179a29
+  checksum: 10c0/96fdc96a735eb2e4080f6c6ead372e80df2115b91f2734948684a26d0498e47aaf5d49902e638c033bfcedabfaafdeacf67c4c4e66c34f0aa7e2cc065a65cb19
   languageName: node
   linkType: hard
 
