@@ -92,3 +92,5 @@ typings/
 out/
 
 local-resources/
+
+.yarn/
