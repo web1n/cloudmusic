@@ -1,7 +1,4 @@
-import { webFrame } from 'electron';
-import style from './css/login.scss?inline';
+import { insertCss } from "./css";
 
 
-window.addEventListener('DOMContentLoaded', () => {
-    webFrame.insertCSS(style);
-});
+insertCss('login');

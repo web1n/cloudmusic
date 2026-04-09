@@ -1,25 +1,4 @@
-export function initLocalStorageHook() {
-    const originalSetItem = localStorage.setItem;
-
-    const UPLOAD_CONFIG_KEY_LIST = [
-        'setting',
-        'autoRunShowType'
-    ];
-
-    localStorage.setItem = function (key, value) {
-        if (UPLOAD_CONFIG_KEY_LIST.includes(key) && typeof value === 'string') {
-            window.App.saveEncryptedConfig(key, value);
-        }
-
-        originalSetItem.apply(this, [key, value]);
-    };
-}
-
-export function initMediaSessionHook() {
-    console.log('Initializing media session handler');
-    window.mediaControl.initMediaControl();
-
-    // hook media session action handler
+export function hookMediaSessionActionHandler() {
     const originalSetHandler = MediaSession.prototype.setActionHandler;
     window.mediaControlHandlers = {};
 
@@ -32,8 +11,9 @@ export function initMediaSessionHook() {
 
         originalSetHandler.apply(this, [action, handler]);
     };
+}
 
-    // hook media session metadata setter
+export function hookMediaSessionMetadataSetter() {
     const descriptor = Object.getOwnPropertyDescriptor(MediaSession.prototype, 'metadata')!!;
     Object.defineProperty(navigator.mediaSession, 'metadata', {
         set(value) {
@@ -53,8 +33,9 @@ export function initMediaSessionHook() {
         configurable: true,
         enumerable: true
     });
+}
 
-    // hook play and pause method
+export function hookMediaSessionPlayPause() {
     const originalPlay = HTMLAudioElement.prototype.play;
     const originalPause = HTMLAudioElement.prototype.pause;
 

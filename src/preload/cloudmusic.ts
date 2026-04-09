@@ -1,16 +1,16 @@
-import { contextBridge, webFrame } from 'electron';
-import { initLocalStorageHook, initMediaSessionHook } from './hook';
-import { app, mediaControl, windowControl } from './api';
-import style from './css/login.scss?inline';
+import { exposeApi } from './api';
+import { initHook } from './hook';
+import { insertCss } from './css';
+import { initMediaControl } from './api/media';
 
 
-contextBridge.exposeInMainWorld('windowControl', windowControl);
-contextBridge.exposeInMainWorld('mediaControl', mediaControl);
-contextBridge.exposeInMainWorld('App', app);
+exposeApi('App', 'mediaControl', 'windowControl');
+initHook(
+    'LocalStorageSetter',
+    'MediaSessionActionHandler',
+    'MediaSessionMetadataSetter',
+    'MediaSessionPlayPause'
+);
+insertCss('cloudmusic');
 
-contextBridge.executeInMainWorld({ func: initMediaSessionHook });
-contextBridge.executeInMainWorld({ func: initLocalStorageHook });
-
-window.addEventListener('DOMContentLoaded', () => {
-    webFrame.insertCSS(style);
-});
+initMediaControl();
