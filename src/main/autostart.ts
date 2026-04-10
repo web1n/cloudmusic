@@ -1,8 +1,9 @@
 import fs from 'fs';
+import path from 'path';
 import autoStartContent from '../../resources/autostart.desktop?raw';
 
 
-const AUTOSTART_DESKTOP_FILE_PATH = `${process.env.HOME}/.config/autostart/cloudmusic.desktop`;
+const AUTOSTART_DESKTOP_FILE_PATH = path.join(process.env.HOME || '/root/', '.config', 'autostart', 'cloudmusic.desktop');
 
 let autoStart: boolean;
 
@@ -14,6 +15,7 @@ function createAutoStartDesktopFile() {
     if (isAutoStartDesktopFileExists()) return true;
 
     try {
+        fs.mkdirSync(path.dirname(AUTOSTART_DESKTOP_FILE_PATH), { recursive: true });
         fs.writeFileSync(AUTOSTART_DESKTOP_FILE_PATH, autoStartContent, 'utf-8');
         return true;
     } catch (error) {
