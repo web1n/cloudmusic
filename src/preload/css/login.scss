@@ -1,7 +1,4 @@
 * {
-    pointer-events: none;
-    user-select: none;
-
     overflow: hidden !important;
 }
 
@@ -22,11 +19,15 @@ iframe[name="contentFrame"] {
     height: 100%;
 }
 
-canvas[height="256"][width="256"] {
+div:has(canvas[height="256"][width="256"]) {
     visibility: visible;
+
+    * {
+        visibility: visible;
+    }
 }
 
-canvas[height="256"][width="256"] {
+div:has(canvas[height="256"][width="256"]) {
     position: fixed;
     z-index: 9999;
     top: 0;
