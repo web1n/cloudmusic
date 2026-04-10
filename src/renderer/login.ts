@@ -1,4 +1,3 @@
-import { initCloseButton } from './index';
 import './login.scss';
 
 import qrcode from 'qrcode';
@@ -139,7 +138,6 @@ function initReloadButton() {
 }
 
 (async () => {
-    initCloseButton();
     initReloadButton();
 
     await checkUserProfile();
