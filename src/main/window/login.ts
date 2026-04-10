@@ -35,6 +35,10 @@ function createLoginView(window: BrowserWindow) {
         window.close();
     });
 
+    window.once('close', () => {
+        loginView.webContents.close();
+    });
+
     window.contentView.addChildView(loginView);
 
     if (process.env.NODE_ENV === 'development') {
