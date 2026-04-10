@@ -85,6 +85,15 @@ export function showWindow(type: WindowType) {
     targetWindow.focus();
 }
 
+export function getWindowStatus(type: WindowType) {
+    const targetWindow = getWindow(type);
+    if (!targetWindow) return 'closed';
+
+    if (targetWindow.isMinimized()) return 'minimized';
+    if (!targetWindow.isVisible()) return 'hidden';
+    return 'visible';
+}
+
 export function createShowWindow(type: WindowType) {
     const targetWindow = getWindow(type);
 

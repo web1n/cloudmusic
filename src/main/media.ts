@@ -1,5 +1,5 @@
 import { Notification } from 'electron';
-import { sendIpc } from './window';
+import { getWindowStatus, sendIpc } from './window';
 import { updateTray } from './tray';
 import { getConfig } from './configs';
 
@@ -13,12 +13,14 @@ const currentStatus = {
 }
 
 function updateNotification() {
-    if (!isPlaying() || !getMediaMetadata()) return;
+    const metadata = getMediaMetadata();
+    if (!isPlaying() || !metadata) return;
     if (!getConfig('local.showPlayDesktopNotify', true)) return;
+    if (getWindowStatus('main') === 'visible') return;
 
     const notification = new Notification({
-        title: getMediaMetadata().title,
-        body: getMediaMetadata().artist,
+        title: metadata.title,
+        body: metadata.artist,
         silent: true,
     });
     notification.show();
