@@ -35,7 +35,18 @@ if (!getConfig('setting.hardware-acceleration', true)) {
     app.disableHardwareAcceleration();
 }
 
+function updateUserAgent() {
+    const customUA = app.userAgentFallback
+        .replace(`${app.name}/${app.getVersion()} `, '')
+        .replace(`Electron/${process.versions.electron} `, '');
+    app.userAgentFallback = customUA;
+
+    console.log('UserAgent:', app.userAgentFallback);
+}
+
 app.whenReady().then(() => {
+    updateUserAgent();
+
     if (process.env.NODE_ENV === 'development' && process.env['SAVE_RESOURCES']) {
         handleSaveResources();
     } else {
