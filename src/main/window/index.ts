@@ -29,6 +29,7 @@ export function createWindow(type: WindowType, options?: BrowserWindowConstructo
             contextIsolation: true,
             preload: PRELOAD_JS_PATHS[type],
         },
+        transparent: type !== 'main',
         ...(options || {})
     });
     windows[type] = window.id;

@@ -1,5 +1,9 @@
 @import "~bootstrap/scss/bootstrap";
 
+body {
+    background: transparent;
+}
+
 .draggable {
     -webkit-app-region: drag !important;
 
