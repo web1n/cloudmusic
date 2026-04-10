@@ -1,4 +1,5 @@
-import { initCloseButton } from './index';
+import './index.scss';
+
 
 const RELEASE_URL = 'https://github.com/web1n/cloudmusic/releases';
 
@@ -35,7 +36,6 @@ function initVersionElements() {
 const { version } = parseQuery();
 
 (() => {
-    initCloseButton();
     initVersionElements();
     initConfigElements();
 })();
