@@ -44,8 +44,8 @@ export type App = {
 export type QrCodeLoginStatus = 'expired' | 'waiting' | 'scanned' | 'authorized' | 'failed';
 
 export type Login = {
-    generateUnikey: () => Promise<{ unikey: string; url: string }>;
-    checkLoginStatus(unikey: string): Promise<{ status: QrCodeLoginStatus; message?: string }>;
+    generateUnikey: () => Promise<{ chainId: string; unikey: string; url: string }>;
+    checkLoginStatus(chainId: string, unikey: string): Promise<{ status: QrCodeLoginStatus; message?: string }>;
     getUserProfile(): Promise<{ userId: string; nickname: string; avatarUrl: string }>;
     setLoginViewBounds(bounds: { x: number; y: number; width: number; height: number }): void;
 };

@@ -11,10 +11,10 @@ async function handleGenerateUnikey() {
     return await generateUnikey();
 }
 
-async function handleCheckLoginStatus(unikey: string): Promise<{ status: QrCodeLoginStatus; message?: string }> {
+async function handleCheckLoginStatus(chainId: string, unikey: string): Promise<{ status: QrCodeLoginStatus; message?: string }> {
     console.log('Handling check login status request for unikey:', unikey);
 
-    const { status, message } = await checkQrCodeStatus(unikey);
+    const { status, message } = await checkQrCodeStatus(chainId, unikey);
 
     if (status === 'authorized') {
         sendIpc('main', 'login-success');
@@ -41,7 +41,7 @@ function onSetLoginViewBounds(
 
 export function registerLoginIPCHandlers() {
     ipcMain.handle('generate-unikey', async (_) => await handleGenerateUnikey());
-    ipcMain.handle('check-login-status', async (_, unikey) => await handleCheckLoginStatus(unikey));
+    ipcMain.handle('check-login-status', async (_, chainId, unikey) => await handleCheckLoginStatus(chainId, unikey));
     ipcMain.handle('get-user-profile', async (_) => await handleGetUserProfile());
     ipcMain.on('set-login-view-bounds', onSetLoginViewBounds);
 }

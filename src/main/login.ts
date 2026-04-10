@@ -1,4 +1,4 @@
-import { net } from 'electron';
+import { net, session } from 'electron';
 import { constants, createCipheriv, publicEncrypt, randomBytes, RsaPublicKey } from 'crypto';
 import type { QrCodeLoginStatus } from '../cloudmusic';
 
@@ -79,8 +79,8 @@ async function fetch<T>(url: string, options: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Origin': 'https://music.163.com',
             'Referer': 'https://music.163.com/',
-            'x-os': 'web',
-            'Nm-GCore-Status': '1',
+            'X-Os': 'web',
+            'X-Channelsource': 'undefined',
             ...(options.headers || {}),
         }
     });
@@ -95,7 +95,16 @@ async function fetch<T>(url: string, options: {
     };
 }
 
-export async function generateUnikey(): Promise<{ unikey: string; url: string }> {
+async function getChainId() {
+    const cookies = await session.defaultSession.cookies.get({ url: 'https://music.163.com' });
+    const sDeviceId = cookies.find(cookie => cookie.name === 'sDeviceId')?.value;
+
+    return `v1_${sDeviceId || `unknown-${Math.floor(Math.random() * 1e6)}`}_web_login_${Date.now()}`;
+}
+
+export async function generateUnikey(): Promise<{ chainId: string; unikey: string; url: string }> {
+    const chainId = await getChainId();
+
     const { json } = await fetch<{ code: number; unikey: string }>(UNIKEY_URL, {
         method: 'POST',
         params: {
@@ -107,11 +116,16 @@ export async function generateUnikey(): Promise<{ unikey: string; url: string }>
     if (json.code !== 200) throw new Error(`Failed to get unikey, response code: ${json.code}`);
     if (typeof json.unikey !== 'string') throw new Error('Unikey not found in response');
 
-    const url = `https://music.163.com/login?codekey=${json.unikey}`;
-    return { unikey: json.unikey, url: url };
+    const url = new URL('https://music.163.com/st/platform/scanlogin');
+    url.searchParams.set('codekey', json.unikey);
+    url.searchParams.set('chainId', chainId);
+    url.searchParams.set('hdw_device', 'web');
+    url.searchParams.set('hdw_appid', 'web');
+
+    return { chainId: chainId, unikey: json.unikey, url: url.toString() };
 }
 
-export async function checkQrCodeStatus(unikey: string): Promise<{
+export async function checkQrCodeStatus(chainId: string, unikey: string): Promise<{
     status: QrCodeLoginStatus;
     message?: string;
 }> {
@@ -125,7 +139,8 @@ export async function checkQrCodeStatus(unikey: string): Promise<{
             key: unikey,
         },
         headers: {
-            'X-loginMethod': 'QrCode'
+            'X-Login-Chain-Id': chainId,
+            'X-Loginmethod': 'QrCode',
         }
     });
     console.log('Received response for check login status:', json, headers.getSetCookie());

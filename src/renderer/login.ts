@@ -51,11 +51,11 @@ function clearLoginCheckInterval() {
     loginCheckInterval = null;
 }
 
-async function checkLogin(unikey: string) {
+async function checkLogin(chainId: string, unikey: string) {
     let status: QrCodeLoginStatus;
     let message: string | undefined;
     try {
-        ({ status, message } = await window.Login.checkLoginStatus(unikey));
+        ({ status, message } = await window.Login.checkLoginStatus(chainId, unikey));
     } catch (error: any) {
         console.error('Error checking login status:', error);
         showStatus(error || '检查登录状态失败', true);
@@ -115,10 +115,11 @@ function initIFrameLogin() {
 }
 
 async function initApiLogin() {
+    let chainId: string;
     let unikey: string;
     let url: string;
     try {
-        ({ unikey, url } = await window.Login.generateUnikey());
+        ({ chainId, unikey, url } = await window.Login.generateUnikey());
     } catch (error: any) {
         console.error('Error generating unikey:', error);
         showStatus(error || '获取登录二维码失败', true);
@@ -128,7 +129,7 @@ async function initApiLogin() {
     console.log('Generated unikey:', unikey, url);
     showLoginQrCode(url);
 
-    loginCheckInterval = setInterval(async () => await checkLogin(unikey), 2000);
+    loginCheckInterval = setInterval(async () => await checkLogin(chainId, unikey), 2000);
 }
 
 function initReloadButton() {

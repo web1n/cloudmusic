@@ -6,8 +6,8 @@ export function generateUnikey() {
     return ipcRenderer.invoke('generate-unikey');
 }
 
-export function checkLoginStatus(unikey: string) {
-    return ipcRenderer.invoke('check-login-status', unikey);
+export function checkLoginStatus(chainId: string, unikey: string) {
+    return ipcRenderer.invoke('check-login-status', chainId, unikey);
 }
 
 export function getUserProfile() {
