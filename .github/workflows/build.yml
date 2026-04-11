@@ -31,7 +31,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn
+        run: corepack enable && yarn
 
       - name: Save resources
         run: |
